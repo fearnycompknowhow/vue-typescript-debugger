@@ -1,27 +1,54 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/>
+  <div class="container" @click="onClick">
+    <div class="logo">ckh</div>
+  </div>
 </template>
 
-<script lang="ts">
+<script> // <-- Notice that we removed 'lang="ts"' from the opening script tag
 import { defineComponent } from 'vue';
-import HelloWorld from './components/HelloWorld.vue';
 
 export default defineComponent({
   name: 'App',
-  components: {
-    HelloWorld
+  methods: {
+    onClick() {
+      console.log('Clicked!');
+    }
   }
 });
 </script>
 
 <style>
+/* Some basic styles to center the content */
 #app {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  background: #063267;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  color: white;
+  font-size: 48px;
+  border: 3px white solid;
+  padding: 0;
+  line-height: 34px;
+  padding-left: 2px;
+  padding-top: 8px;
+  padding-bottom: 2px;
 }
 </style>
