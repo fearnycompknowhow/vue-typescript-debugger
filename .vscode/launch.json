@@ -1,0 +1,18 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+    "type": "chrome",
+    "request": "launch",
+    "name": "vuejs: chrome",
+    "url": "http://localhost:8080",
+    "webRoot": "${workspaceFolder}",
+    "pathMapping": {
+      "/_karma_webpack_": "${workspaceFolder}"
+    },
+    "sourceMapPathOverrides": {
+      "webpack:///./src/*": "${webRoot}/src/*"
+    },
+    }
+  ]
+}
