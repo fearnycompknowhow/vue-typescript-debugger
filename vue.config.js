@@ -5,7 +5,9 @@ module.exports = {
       plugins: [{
         apply(compiler) {
           compiler.hooks.thisCompilation.tap('Initializing Compilation', (compilation) => {
+            compilation.hooks.succeedModule.tap('Module Built', (module) => {
 
+            });
           });
         }
       }]
