@@ -3,8 +3,10 @@ module.exports = {
     return {
       devtool: 'source-map',
       plugins: [{
-        apply() {
+        apply(compiler) {
+          compiler.hooks.thisCompilation.tap('Initializing Compilation', (compilation) => {
 
+          });
         }
       }]
     };
