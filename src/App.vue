@@ -4,7 +4,7 @@
   </div>
 </template>
 
-<script> // <-- Notice that we removed 'lang="ts"' from the opening script tag
+<script lang="ts">
 import { defineComponent } from 'vue';
 
 export default defineComponent({
