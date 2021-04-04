@@ -20,6 +20,10 @@ module.exports = {
 
               sourceMaps[pathWithoutQuery] = module['_source']['_sourceMap'];
             });
+
+
+            compilation.hooks.finishModules.tapPromise('All Modules Built', (modules) => {
+            });
           });
         }
       }]
