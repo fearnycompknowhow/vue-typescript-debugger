@@ -32,6 +32,12 @@ module.exports = {
                 if (!/type=script/.test(resource)) continue;
                 if (!/lang=ts/.test(resource)) continue;
                 if (!module['_source'] || !module['_source']['_sourceMap']) continue;
+
+                const pathWithoutQuery = module.resource.replace(/\?.*$/, '');
+                const templateSourceMap = sourceMaps[pathWithoutQuery];
+
+                // Skip this module if it doesn't have a corresponding template Source Map
+                if (!templateSourceMap) continue;
               }
             });
           });
