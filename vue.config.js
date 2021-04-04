@@ -22,7 +22,17 @@ module.exports = {
             });
 
 
-            compilation.hooks.finishModules.tapPromise('All Modules Built', (modules) => {
+            compilation.hooks.finishModules.tapPromise('All Modules Built', async (modules) => {
+              for (const module of modules) {
+                const { resource } = module;
+
+                if (!resource) continue;
+                if (/node_modules/.test(resource)) continue;
+                if (!/\.vue/.test(resource)) continue;
+                if (!/type=script/.test(resource)) continue;
+                if (!/lang=ts/.test(resource)) continue;
+                if (!module['_source'] || !module['_source']['_sourceMap']) continue;
+              }
             });
           });
         }
