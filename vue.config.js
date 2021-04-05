@@ -1,3 +1,5 @@
+const { SourceMapConsumer, SourceMapGenerator } = require('source-map');
+
 const sourceMaps = {};
 
 module.exports = {
@@ -50,6 +52,45 @@ module.exports = {
                   if (/<script/.test(line)) break;
                   ++indexOfScriptTag;
                 }
+
+                const shiftedSourceMap = await SourceMapConsumer.with(scriptSourceMap, null, async (consumer) => {
+                  const generator = new SourceMapGenerator();
+
+                  consumer.eachMapping((mapping) => {
+                    const {
+                      generatedColumn,
+                      generatedLine,
+                      originalColumn,
+                      originalLine
+                    } = mapping;
+
+                    let name = mapping.name;
+                    let source = templateSourceMap.sources[0] || null;
+
+                    if (originalLine === null || originalColumn === null) {
+                      name = null;
+                      source = null;
+                    }
+                    else {
+                      original = {
+                        column: originalColumn,
+                        line: originalLine + indexOfScriptTag - 1,
+                      };
+                    }
+
+                    generator.addMapping({
+                      generated: {
+                        column: generatedColumn,
+                        line: generatedLine,
+                      },
+                      original,
+                      source,
+                      name
+                    });
+                  });
+
+                  return generator.toJSON();
+                });
               }
             });
           });
