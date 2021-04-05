@@ -36,8 +36,20 @@ module.exports = {
                 const pathWithoutQuery = module.resource.replace(/\?.*$/, '');
                 const templateSourceMap = sourceMaps[pathWithoutQuery];
 
-                // Skip this module if it doesn't have a corresponding template Source Map
                 if (!templateSourceMap) continue;
+
+                const scriptSourceMap = module['_source']['_sourceMap'];
+                scriptSourceMap.sourcesContent = [...templateSourceMap.sourcesContent];
+                scriptSourceMap.sources = [...templateSourceMap.sources];
+
+                const lines = (templateSourceMap.sourcesContent[0] || '').match(/.+/g);
+
+                let indexOfScriptTag = 0;
+
+                for (const line of lines) {
+                  if (/<script/.test(line)) break;
+                  ++indexOfScriptTag;
+                }
               }
             });
           });
