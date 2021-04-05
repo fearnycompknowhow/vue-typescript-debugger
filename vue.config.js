@@ -23,7 +23,6 @@ module.exports = {
               sourceMaps[pathWithoutQuery] = module['_source']['_sourceMap'];
             });
 
-
             compilation.hooks.finishModules.tapPromise('All Modules Built', async (modules) => {
               for (const module of modules) {
                 const { resource } = module;
@@ -49,8 +48,8 @@ module.exports = {
                 let indexOfScriptTag = 0;
 
                 for (const line of lines) {
-                  if (/<script/.test(line)) break;
                   ++indexOfScriptTag;
+                  if (/<script/.test(line)) break;
                 }
 
                 const shiftedSourceMap = await SourceMapConsumer.with(scriptSourceMap, null, async (consumer) => {
@@ -74,7 +73,7 @@ module.exports = {
                     else {
                       original = {
                         column: originalColumn,
-                        line: originalLine + indexOfScriptTag - 1,
+                        line: originalLine + indexOfScriptTag,
                       };
                     }
 
@@ -91,6 +90,8 @@ module.exports = {
 
                   return generator.toJSON();
                 });
+
+                scriptSourceMap.mappings = shiftedSourceMap.mappings;
               }
             });
           });
