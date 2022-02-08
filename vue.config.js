@@ -8,13 +8,13 @@ module.exports = {
       plugins: [{
         apply(compiler) {
           compiler.hooks.thisCompilation.tap('Initializing Compilation', (compilation) => {
-            compilation.hooks.finishModules.tapPromise('Module Built', async (modules) => {
+            compilation.hooks.finishModules.tapPromise('All Modules Built', async (modules) => {
               for (const module of modules) {
                 if (shouldSkipModule(module)) continue;
 
                 const pathWithoutQuery = module.resource.replace(/\?.*$/, '');
-                const sourceMap = extractSourceMap(module);
                 const sourceFile = fs.readFileSync(pathWithoutQuery).toString('utf-8');
+                const sourceMap = extractSourceMap(module);
 
                 sourceMap.sources = [pathWithoutQuery];
                 sourceMap.sourcesContent = [sourceFile];
